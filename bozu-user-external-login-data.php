@@ -8,7 +8,7 @@ Author:      fcojgodoy
 Author URI:  https://github.com/fcojgodoy/
 License:     GPL3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Text Domain: b
+Text Domain: bozuueld
 Domain Path: /languages
 
 Bozu User Contact Methods is free software: you can redistribute it and/or modify
