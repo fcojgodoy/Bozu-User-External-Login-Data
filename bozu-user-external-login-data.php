@@ -34,6 +34,8 @@ function bozu_user_external_login_data($user) {
 
 ?>
 
+<h3><?php _e('Your WordPress site information', 'bozuueld') ?></h3>
+
 <table class="form-table">
 
 <tr>
@@ -61,7 +63,7 @@ function bozu_user_external_login_data($user) {
 		<label for="bueld-wp-pass"><?php _e('Admin password', 'bozuueld'); ?></label>
 	</th>
 	<td>
-		<input type="password" name="bueld-wp-pass" id="bueld-wp-pass" value="<?php echo esc_attr( get_the_author_meta( 'bueld-wp-pass', $user->ID ) ); ?>" class="regular-text" />
+		<input type="text" name="bueld-wp-pass" id="bueld-wp-pass" value="<?php echo esc_attr( get_the_author_meta( 'bueld-wp-pass', $user->ID ) ); ?>" class="regular-text" />
 		<br><span class="description"><?php _e('Your WordPress administrator password', 'bozuueld'); ?></span>
 		<br><span class="description"><?php _e('Do not worry about the security of your password. It will be treated with all the security that is required.', 'bozuueld'); ?></span>
 	</td>
@@ -75,5 +77,18 @@ function bozu_user_external_login_data($user) {
 
 add_action('show_user_profile', 'bozu_user_external_login_data');
 add_action('edit_user_profile', 'bozu_user_external_login_data');
+
+// Hook is used to save custom fields that have been added to the WordPress profile page (if current user) 
+add_action( 'personal_options_update', 'bozu_update_user_external_login_data' );
+
+// Hook is used to save custom fields that have been added to the WordPress profile page (if not current user) 
+add_action( 'edit_user_profile_update', 'bozu_update_user_external_login_data' );
+
+function bozu_update_user_external_login_data( $user_id ) {
+    if ( current_user_can( 'edit_user', $user_id ) )
+        update_user_meta( $user_id, 'bueld-wp-url', $_POST['bueld-wp-url'] );
+        update_user_meta( $user_id, 'bueld-wp-user', $_POST['bueld-wp-user'] );
+        update_user_meta( $user_id, 'bueld-wp-pass', $_POST['bueld-wp-pass'] );
+}
 
 ?>
